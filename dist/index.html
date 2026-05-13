@@ -1,141 +1,428 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-    <title>JSME Molecule Editor</title>
+    <meta charset="utf-8">
+    <title>JSME — Documentation &amp; Examples</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Documentation, integration examples, and test pages for the JSME JavaScript molecule editor.">
+    <meta name="theme-color" content="#0c1424">
+    <meta name="color-scheme" content="light dark">
+
+    <script>
+        (function () {
+            try {
+                var t = localStorage.getItem('jsme-theme');
+                if (t === 'light' || t === 'dark') {
+                    document.documentElement.setAttribute('data-theme', t);
+                }
+            } catch (e) {}
+        })();
+    </script>
+
+    <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
-<h1>JSME Molecule Editor Distribution</h1>
 
-<h3>This distribution contains two directories:<br></h3>
-<ul>
-    <li>jsme - the actual JSME code - every file in the directory is a JavaScript code optimized for specific browser
-    </li>
-    <li><a href="api_javadoc/index.html">api_javadoc</a> - the JSME API - please note that although the JSME is in
-        JavaScript, the documentation was generated automatically and therefore follows the Java conventions, anyway it
-        should provide sufficient information to call low-level JSME functions
-    </li>
-</ul>
-<br>
+<a class="skip-link" href="#main">Skip to content</a>
 
-<a href="doc.html">doc.html</a> provides basic information about JSME implementation into web page - start with this
-document<br>
-<br>
+<header class="nav">
+    <div class="container nav-inner">
+        <a class="brand" href="../index.html">
+            <span class="brand-mark">J</span>
+            <span>JSME</span>
+        </a>
+        <nav class="nav-links" aria-label="Primary">
+            <a href="../index.html#features">Features</a>
+            <a href="JSME_test.html">Playground</a>
+            <a href="../help.html">Help</a>
+            <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Toggle color theme">
+                <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+            </button>
+            <a class="nav-cta" href="https://github.com/jsme-editor/jsme-editor.github.io" target="_blank" rel="noopener">GitHub</a>
+        </nav>
+    </div>
+</header>
 
-<br>
-<h3>Example pages:<br></h3>
-<ul>
-    <li><a href="JSME_minimal.html">JSME_minimal.html</a> minimalistic example how to incorporate JSME into a web page
-    </li>
+<main id="main">
 
+<section class="page-header">
+    <div class="container">
+        <span class="eyebrow">Distribution · Documentation</span>
+        <h1>JSME documentation &amp; examples</h1>
+        <p>Implementation notes, the full API reference, integration examples, and test pages for the JSME molecule editor distribution.</p>
+    </div>
+</section>
 
-    <li><a href="JSME_test.html">JSME_test.html</a> Example containing description of various program options</li>
-    <li><a href="JME_to_JSME_simple.html">JME_to_JSME_simple.html</a> Adapt a page with the JME Java applet to use JSME</li>
-    <li><a href="JME_to_JSME.html">JME_to_JSME.html</a> Adapt a page with the JME Java applet to use JSME</li>
-    <li><a href="JSME_dnd_demo.html">JSME_dnd_demo.html</a> Example illustrating JSME drag-and-drop capabilities</li>
-    <li><a href="JSME_atom_highlight_demo.html">JSME_atom_highlight_demo.html</a> Example of atom highlighting</li>
-    <li><a href="JSME_smiles_atom_highlight.html">JSME_smiles_atom_highlight.html</a> Example of atom highlighting
-        inside a SMILES
-    </li>
-    <li><a href="JSME_chemical_resolver_demo.html">JSME_chemical_resolver_demo.html</a> JSME can communicate with the <a
-            href="http://cactus.nci.nih.gov/chemical/structure">Chemical Identifier Resolver service</a> at NIH and
-        automatically retrieve pasted molecules
-    </li>
-    <li><a href="JSME_callback_and_mark.html">JSME_callback_and_mark.html</a>JavaScript callback for structure
-        modification. Atom marking
-    </li>
-    <li><a href="JSME_access_internal_data.html">JSME_access_internal_data.html</a>Access the chemical data of the structures and reactions depicted in the editor
-    </li>
+<section class="docs-section">
+    <div class="container">
 
-    <li><a href="JSME_resize.html">JSME_resize.html</a> Resize the applet</li>
-    <li><a href="JSME_autoresize.html">JSME_autoresize.html</a> Resize the applet when the window size changes</li>
-    <li><a href="JSME_depict_smiles.html">JSME_depict_smiles.html</a> JSME in depict mode initialized with a SMILES</li>
-    <li><a href="JSME_Rgroups.html">JSME_Rgroups.html</a> Handling of R groups</li>
+        <div class="docs-head">
+            <span class="docs-eyebrow">Start here</span>
+            <h2>Getting started</h2>
+            <p>Read the implementation guide first, then try the minimal example or the API playground.</p>
+        </div>
+        <div class="doc-cards">
+            <a class="doc-card" href="doc.html">
+                <span class="doc-card-name">doc.html</span>
+                <span class="doc-card-desc">Basic information about embedding JSME into a web page.</span>
+                <div class="doc-card-meta">Implementation guide</div>
+            </a>
+            <a class="doc-card" href="JSME_minimal.html">
+                <span class="doc-card-name">JSME_minimal.html</span>
+                <span class="doc-card-desc">Minimalistic example showing how to incorporate JSME into a web page.</span>
+                <div class="doc-card-meta">Minimal embed</div>
+            </a>
+            <a class="doc-card" href="JSME_test.html">
+                <span class="doc-card-name">JSME_test.html</span>
+                <span class="doc-card-desc">Interactive playground covering rendering options, callbacks, and import/export.</span>
+                <div class="doc-card-meta">Playground</div>
+            </a>
+        </div>
+    </div>
+</section>
 
+<section class="docs-section">
+    <div class="container">
+        <div class="docs-head">
+            <span class="docs-eyebrow">Reference</span>
+            <h2>API documentation</h2>
+            <p>The JSME API documentation is generated automatically and follows Java conventions — sufficient to call all low-level JSME functions.</p>
+        </div>
+        <div class="doc-cards two">
+            <a class="doc-card" href="api_javadoc/index.html">
+                <span class="doc-card-name">api_javadoc/index.html</span>
+                <span class="doc-card-desc">Full Javadoc-style reference for the JSME JavaScript API.</span>
+                <div class="doc-card-meta">API reference</div>
+            </a>
+            <a class="doc-card" href="../index.html#install">
+                <span class="doc-card-name">jsme/</span>
+                <span class="doc-card-desc">The actual JSME runtime — JavaScript bundles optimized per browser. Load <code>jsme/jsme.nocache.js</code> in your page.</span>
+                <div class="doc-card-meta">Runtime files</div>
+            </a>
+        </div>
+    </div>
+</section>
 
-    <li><a href="JSME_depict_edit_toggle.html">JSME_depict_edit_toggle.html</a> Toggle between depict and edit mode</li>
-    <li><a href="JSME_smiles_atom_highlight.html">JSME_smiles_atom_highlight.html</a> Show SMILES with atom highlight
-    </li>
-    <li><a href="JSME_depict_action.html">JSME_depict_action.html</a> Depict mode with action enabled dynamically</li>
-    <li><a href="JSME_additional_data.html">JSME_additional_data.html</a> JSME_save custom data into atoms and bonds,
-        custom background coloring
-    </li>
-    <li><a href="JSME_parent_and_metabolites.html">JSME_parent_and_metabolites.html</a> Setup for metabolites generation
-        that uses custom templates
-    </li>
-    <li><a href="JSME_template.html">JSME_template.html</a> Creation of custom templates</li>
+<section class="docs-section">
+    <div class="container">
+        <div class="docs-head">
+            <span class="docs-eyebrow">Examples</span>
+            <h2>Basic integration</h2>
+            <p>Drop-in patterns: migrating from the JME Java applet, controlling size, and embedding in special containers.</p>
+        </div>
+        <div class="doc-cards">
+            <a class="doc-card" href="JME_to_JSME_simple.html">
+                <span class="doc-card-name">JME_to_JSME_simple.html</span>
+                <span class="doc-card-desc">Adapt a page that used the JME Java applet to JSME (simple form).</span>
+            </a>
+            <a class="doc-card" href="JME_to_JSME.html">
+                <span class="doc-card-name">JME_to_JSME.html</span>
+                <span class="doc-card-desc">Full migration example from the JME Java applet to JSME.</span>
+            </a>
+            <a class="doc-card" href="JSME_resize.html">
+                <span class="doc-card-name">JSME_resize.html</span>
+                <span class="doc-card-desc">Resize the applet programmatically.</span>
+            </a>
+            <a class="doc-card" href="JSME_autoresize.html">
+                <span class="doc-card-name">JSME_autoresize.html</span>
+                <span class="doc-card-desc">Automatically resize the applet when the window size changes.</span>
+            </a>
+            <a class="doc-card" href="JSME_hidden.html">
+                <span class="doc-card-name">JSME_hidden.html</span>
+                <span class="doc-card-desc">JSME embedded inside a hidden &lt;div&gt;.</span>
+            </a>
+            <a class="doc-card" href="JSME_dojo.html">
+                <span class="doc-card-name">JSME_dojo.html</span>
+                <span class="doc-card-desc">Dynamically load JSME alongside another dynamic loading library.</span>
+            </a>
+        </div>
+    </div>
+</section>
 
-    <li><a href="JSME_template_aminoacids.html">JSME_template_aminoacids.html</a> Attempt to create a peptide builder
-    </li>
-    <li><a href="JSME_functional_group_coloring.html">JSME_functional_group_coloring.html</a>Show how to create a custom
-        background color palette for atoms
-    </li>
+<section class="docs-section">
+    <div class="container">
+        <div class="docs-head">
+            <span class="docs-eyebrow">Examples</span>
+            <h2>Depict &amp; SVG</h2>
+            <p>Read-only display modes, depict/edit toggles, and SVG generation.</p>
+        </div>
+        <div class="doc-cards">
+            <a class="doc-card" href="JSME_depict_smiles.html">
+                <span class="doc-card-name">JSME_depict_smiles.html</span>
+                <span class="doc-card-desc">JSME in depict mode, initialized with a SMILES string.</span>
+            </a>
+            <a class="doc-card" href="JSME_depict_edit_toggle.html">
+                <span class="doc-card-name">JSME_depict_edit_toggle.html</span>
+                <span class="doc-card-desc">Toggle between depict and edit mode.</span>
+            </a>
+            <a class="doc-card" href="JSME_depict_action.html">
+                <span class="doc-card-name">JSME_depict_action.html</span>
+                <span class="doc-card-desc">Depict mode with action enabled dynamically.</span>
+            </a>
+            <a class="doc-card" href="JSME_depict.html">
+                <span class="doc-card-name">JSME_depict.html</span>
+                <span class="doc-card-desc">Basic depict mode example.</span>
+            </a>
+            <a class="doc-card" href="JSME_depict_with_callbacks.html">
+                <span class="doc-card-name">JSME_depict_with_callbacks.html</span>
+                <span class="doc-card-desc">Depict mode wired up with JavaScript callbacks.</span>
+            </a>
+            <a class="doc-card" href="JSME_SVG.html">
+                <span class="doc-card-name">JSME_SVG.html</span>
+                <span class="doc-card-desc">Generate SVG output of the current molecule.</span>
+            </a>
+            <a class="doc-card" href="JSME_editor_plus_SVG.html">
+                <span class="doc-card-name">JSME_editor_plus_SVG.html</span>
+                <span class="doc-card-desc">Editor side-by-side with live SVG output.</span>
+            </a>
+            <a class="doc-card" href="JSME_smiles_atom_highlight.html">
+                <span class="doc-card-name">JSME_smiles_atom_highlight.html</span>
+                <span class="doc-card-desc">Display SMILES with selected atoms highlighted.</span>
+            </a>
+        </div>
+    </div>
+</section>
 
-    <li><a href="JSME_alternative_look.html">JSME_alternative_look.htmll</a>Customization of the JSME look
-    </li>
+<section class="docs-section">
+    <div class="container">
+        <div class="docs-head">
+            <span class="docs-eyebrow">Examples</span>
+            <h2>Interaction &amp; callbacks</h2>
+            <p>Drag &amp; drop, structure-modification callbacks, atom highlighting, and the chemical resolver.</p>
+        </div>
+        <div class="doc-cards">
+            <a class="doc-card" href="JSME_dnd_demo.html">
+                <span class="doc-card-name">JSME_dnd_demo.html</span>
+                <span class="doc-card-desc">Drag &amp; drop capabilities for files and structures.</span>
+            </a>
+            <a class="doc-card" href="JSME_callback_and_mark.html">
+                <span class="doc-card-name">JSME_callback_and_mark.html</span>
+                <span class="doc-card-desc">JavaScript callback for structure modification, plus atom marking.</span>
+            </a>
+            <a class="doc-card" href="JSME_atom_highlight_demo.html">
+                <span class="doc-card-name">JSME_atom_highlight_demo.html</span>
+                <span class="doc-card-desc">Highlight atoms inside the editor.</span>
+            </a>
+            <a class="doc-card" href="JSME_chemical_resolver_demo.html">
+                <span class="doc-card-name">JSME_chemical_resolver_demo.html</span>
+                <span class="doc-card-desc">Communicate with the NIH Chemical Identifier Resolver to retrieve pasted names.</span>
+            </a>
+            <a class="doc-card" href="JSME_access_internal_data.html">
+                <span class="doc-card-name">JSME_access_internal_data.html</span>
+                <span class="doc-card-desc">Access the chemical data of structures and reactions inside the editor.</span>
+            </a>
+            <a class="doc-card" href="JSME_additional_data.html">
+                <span class="doc-card-name">JSME_additional_data.html</span>
+                <span class="doc-card-desc">Save custom data into atoms and bonds; custom background coloring.</span>
+            </a>
+            <a class="doc-card" href="JSME_custom_x_shortcuts.html">
+                <span class="doc-card-name">JSME_custom_x_shortcuts.html</span>
+                <span class="doc-card-desc">Create custom keyboard shortcuts for the editor.</span>
+            </a>
+            <a class="doc-card" href="JSME_functional_group_coloring.html">
+                <span class="doc-card-name">JSME_functional_group_coloring.html</span>
+                <span class="doc-card-desc">Create a custom background color palette for atoms.</span>
+            </a>
+            <a class="doc-card" href="JSME_alternative_look.html">
+                <span class="doc-card-name">JSME_alternative_look.html</span>
+                <span class="doc-card-desc">Customize the JSME look and feel.</span>
+            </a>
+        </div>
+    </div>
+</section>
 
+<section class="docs-section">
+    <div class="container">
+        <div class="docs-head">
+            <span class="docs-eyebrow">Examples</span>
+            <h2>Templates, R-groups &amp; InChI</h2>
+            <p>Build custom templates, work with R-groups, and use the bundled InChI library.</p>
+        </div>
+        <div class="doc-cards">
+            <a class="doc-card" href="JSME_Rgroups.html">
+                <span class="doc-card-name">JSME_Rgroups.html</span>
+                <span class="doc-card-desc">Handling of R groups.</span>
+            </a>
+            <a class="doc-card" href="JSME_template.html">
+                <span class="doc-card-name">JSME_template.html</span>
+                <span class="doc-card-desc">Creation of custom templates.</span>
+            </a>
+            <a class="doc-card" href="JSME_template_aminoacids.html">
+                <span class="doc-card-name">JSME_template_aminoacids.html</span>
+                <span class="doc-card-desc">Peptide builder built from amino-acid templates.</span>
+            </a>
+            <a class="doc-card" href="JSME_template_cysteine_lesson.html">
+                <span class="doc-card-name">JSME_template_cysteine_lesson.html</span>
+                <span class="doc-card-desc">Worked cysteine example using templates.</span>
+            </a>
+            <a class="doc-card" href="JSME_parent_and_metabolites.html">
+                <span class="doc-card-name">JSME_parent_and_metabolites.html</span>
+                <span class="doc-card-desc">Setup for metabolite generation using custom templates.</span>
+            </a>
+            <a class="doc-card" href="JSME_inchi_direct.html">
+                <span class="doc-card-name">JSME_inchi_direct.html</span>
+                <span class="doc-card-desc">Use the provided InChI library directly.</span>
+            </a>
+            <a class="doc-card" href="JSME_inchi_direct_interactive.html">
+                <span class="doc-card-name">JSME_inchi_direct_interactive.html</span>
+                <span class="doc-card-desc">Interactive example of the bundled InChI library.</span>
+            </a>
+            <a class="doc-card" href="JSME_test_api.html">
+                <span class="doc-card-name">JSME_test_api.html</span>
+                <span class="doc-card-desc">Test <code>JSApplet.JSME.replaceAllAppletsByJSME</code>.</span>
+            </a>
+        </div>
+    </div>
+</section>
 
-    <li><a href="JSME_custom_x_shortcuts.html">JSME_custom_x_shortcuts.html</a>Create custom keyboard shortcuts</li>
+<section class="docs-section">
+    <div class="container">
+        <div class="docs-head">
+            <span class="docs-eyebrow">Internal</span>
+            <h2>Test pages</h2>
+            <p>Pages used by the developers to check JSME's behavior and performance under load.</p>
+        </div>
+        <div class="doc-cards">
+            <a class="doc-card" href="test_bootstrap.html">
+                <span class="doc-card-name">test_bootstrap.html</span>
+                <span class="doc-card-desc">Check compatibility with Bootstrap CSS.</span>
+            </a>
+            <a class="doc-card" href="bootstrap.html">
+                <span class="doc-card-name">bootstrap.html</span>
+                <span class="doc-card-desc">JSME inside a Bootstrap layout.</span>
+            </a>
+            <a class="doc-card" href="test_depict_many.html">
+                <span class="doc-card-name">test_depict_many.html</span>
+                <span class="doc-card-desc">Display 200 identical structures in JSME format.</span>
+            </a>
+            <a class="doc-card" href="test_depict_many_smiles.html">
+                <span class="doc-card-name">test_depict_many_smiles.html</span>
+                <span class="doc-card-desc">Display 200 structures in SMILES format.</span>
+            </a>
+            <a class="doc-card" href="test_depict_one_smiles_in_table.html">
+                <span class="doc-card-name">test_depict_one_smiles_in_table.html</span>
+                <span class="doc-card-desc">One SMILES structure inside a dynamically created table.</span>
+            </a>
+            <a class="doc-card" href="test_depict_many_smiles_in_table.html">
+                <span class="doc-card-name">test_depict_many_smiles_in_table.html</span>
+                <span class="doc-card-desc">100 SMILES structures inside a dynamically created table.</span>
+            </a>
+            <a class="doc-card" href="test_pubchem_aspirin_depict.html">
+                <span class="doc-card-name">test_pubchem_aspirin_depict.html</span>
+                <span class="doc-card-desc">121 structures in MOL format inside a dynamically created table.</span>
+            </a>
+            <a class="doc-card" href="test_depict_patent_reactions_smirks.html">
+                <span class="doc-card-name">test_depict_patent_reactions_smirks.html</span>
+                <span class="doc-card-desc">200 chemical reactions in SMIRKS format.</span>
+            </a>
+            <a class="doc-card" href="test_depict_fragments.html">
+                <span class="doc-card-name">test_depict_fragments.html</span>
+                <span class="doc-card-desc">Depict fragments / partial structures.</span>
+            </a>
+            <a class="doc-card" href="test_resize_and_replace_jme.html">
+                <span class="doc-card-name">test_resize_and_replace_jme.html</span>
+                <span class="doc-card-desc">Dynamic resizing combined with <code>replaceAllAppletsByJSME</code>.</span>
+            </a>
+            <a class="doc-card" href="test_hidden_iframe.html">
+                <span class="doc-card-name">test_hidden_iframe.html</span>
+                <span class="doc-card-desc">Show and hide JSME embedded in an iframe.</span>
+            </a>
+        </div>
+    </div>
+</section>
 
-    <li><a href="JSME_inchi_direct.html">JSME_inchi_direct.html</a> Show how to use the provided InChI library</li>
-    <li><a href="JSME_inchi_direct_interactive.html">JSME_inchi_direct_interactive.html</a> Another example to show how to use the provided InChI library</li>
-    <li><a href="JSME_test_api.html">JSME_test_api.html</a>Test JSApplet.JSME.replaceAllAppletsByJSME</li>
+<section class="docs-section">
+    <div class="container">
+        <div class="docs-head">
+            <span class="docs-eyebrow">Reference</span>
+            <h2>Other files</h2>
+            <p>License and release information for this distribution.</p>
+        </div>
+        <div class="doc-cards two">
+            <a class="doc-card" href="license.txt">
+                <span class="doc-card-name">license.txt</span>
+                <span class="doc-card-desc">Full text of the BSD license under which JSME is distributed.</span>
+            </a>
+            <a class="doc-card" href="release_notes.txt">
+                <span class="doc-card-name">release_notes.txt</span>
+                <span class="doc-card-desc">JSME changelog and release notes.</span>
+            </a>
+        </div>
+    </div>
+</section>
 
-    <li><a href="JSME_SVG.html">JSME_SVG.html</a>SVG generation</li>
-    <li><a href="JSME_editor_plus_SVG.html">JSME_editor_plus_SVG.html</a>SVG generation</li>
-    <li><a href="JSME_hidden.html">JSME_hidden.html</a>JSME in a hidden div</li>
-    <li><a href="JSME_dojo.html">JSME_dojo.html</a>Example showing how to dynamically load JSME with another dynamic loading library</li>
+<section class="alt">
+    <div class="container">
+        <div class="cite">
+            <div class="cite-label">Cite JSME</div>
+            <p>
+                B. Bienfait and P. Ertl,
+                <a href="http://www.jcheminf.com/content/5/1/24"><strong>JSME: a free molecule editor in JavaScript</strong></a>,
+                <em>Journal of Cheminformatics</em> 5:24 (2013).
+            </p>
+        </div>
+    </div>
+</section>
+</main>
 
-</ul>
-<br>
-<h3>This distribution contains also many test pages that are used by the developers to check the behavior and
-    performance of JSME:</h3>
+<footer>
+    <div class="container">
+        <div class="footer-grid">
+            <div>
+                <h4>JSME</h4>
+                <p style="margin: 0 0 8px;">A free molecule editor in JavaScript by Peter Ertl and Bruno Bienfait.</p>
+                <p style="margin: 0; font-size: 13px; color: rgba(255,255,255,0.4);">Released under the BSD license.</p>
+            </div>
+            <div>
+                <h4>Product</h4>
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="JSME_test.html">Playground</a></li>
+                    <li><a href="index.html">Documentation</a></li>
+                    <li><a href="../help.html">Help</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Downloads</h4>
+                <ul>
+                    <li><a href="../downloads/JSME_2024-04-29.zip">Latest zip</a></li>
+                    <li><a href="https://github.com/jsme-editor/jsme-editor.github.io/tree/main/downloads/">All releases</a></li>
+                    <li><a href="https://www.npmjs.com/package/jsme-editor">npm package</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Community</h4>
+                <ul>
+                    <li><a href="https://github.com/jsme-editor/jsme-editor.github.io">GitHub repo</a></li>
+                    <li><a href="https://github.com/jsme-editor/jsme-editor.github.io/discussions">Discussions</a></li>
+                    <li><a href="https://github.com/jsme-editor/jsme-editor.github.io/issues">Issues</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div>© Peter Ertl &amp; Bruno Bienfait · BSD license</div>
+            <div><a href="license.txt">License</a> · <a href="release_notes.txt">Release notes</a></div>
+        </div>
+    </div>
+</footer>
 
+<script>
+    (function () {
+        var btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        function current() {
+            var t = document.documentElement.getAttribute('data-theme');
+            if (t) return t;
+            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        btn.addEventListener('click', function () {
+            var next = current() === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', next);
+            try { localStorage.setItem('jsme-theme', next); } catch (e) {}
+        });
+    })();
+</script>
 
-<ul>
-    <li>
-        <a href="test_bootstrap.html">test_bootstrap.html</a> Check the compatibility with the bootstrap CSS
-    </li>
-
-    <li>
-        <a href="test_depict_many.html">test_depict_many.html</a> Display of 200 chemical identical structures in JSME
-        format
-    </li>
-    <li><a href="test_depict_many_smiles.html">test_depict_many_smiles.html</a> Display of 200 chemical structures in
-        SMILES
-        format
-    </li>
-    <li><a href="test_depict_one_smiles_in_table.html">test_depict_one_smiles_in_table.html</a> Display of 1chemical
-        structure in SMILES format inside a dynamically created table
-    </li>
-    <li><a href="test_depict_many_smiles_in_table.html">test_depict_many_smiles_in_table.html</a> Display of 100
-        chemical
-        structures in SMILES format inside a dynamically created table
-    </li>
-    <li><a href="test_pubchem_aspirin_depict.html">test_pubchem_aspirin_depict.html</a> Display of 121 chemical
-        structures
-        in MOL format inside a dynamically created table
-    </li>
-    <li><a href="test_depict_patent_reactions_smirks.html">test_depict_patent_reactions_smirks.html</a> Display of 200
-        chemical reactions in SMIRKS format
-    </li>
-    <li><a href="test_resize_and_replace_jme.html">test_resize_and_replace_jme.html</a>Test dynamic resizing and
-        replaceAllAppletsByJSME
-    </li>
-    <li><a href="test_hidden_iframe.html">test_hidden_iframe.html</a>Show and hide JSME embedded in an iframe</li>
-
-
-</ul>
-<br>
-<h3>And some other files:</h3>
-<ul>
-    <li><a href="license.txt">license.txt</a> contains text of the BSD license under which the JSME is distributed</li>
-    <li><a href="release_notes.txt">release_notes.txt</a> provides JSME changelog</li>
-</ul>
-<br>
-If you are using the JSME cite please the following article:<br><br>
-B. Bienfait and P. Ertl, <a href="http://www.jcheminf.com/content/5/1/24"><b>JSME: a free molecule editor in
-    JavaScript</b></a>, J. Cheminformatics 5:24 (2013)
-<br><br>
-Happy molecule editing!
 </body>
+</html>

@@ -1,25 +1,32 @@
-<!doctype html>
-<!-- The DOCTYPE declaration above will set the     -->
-<!-- browser's rendering engine into                -->
-<!-- "Standards Mode". Replacing this declaration   -->
-<!-- with a "Quirks Mode" doctype is not supported. -->
-
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <!--                                           -->
-    <title>JSME test page</title>
-
-    <script type="text/javascript" language="javascript" src="jsme/jsme.nocache.js"></script>
-
+    <meta charset="utf-8">
+    <title>JSME — API Playground</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Interactive playground for the JSME molecule editor JavaScript API. Try options, rendering controls, and import/export to SMILES, Molfile, JME, and SDF.">
+    <meta name="theme-color" content="#0c1424">
+    <meta name="color-scheme" content="light dark">
 
     <script>
+        (function () {
+            try {
+                var t = localStorage.getItem('jsme-theme');
+                if (t === 'light' || t === 'dark') {
+                    document.documentElement.setAttribute('data-theme', t);
+                }
+            } catch (e) {}
+        })();
+    </script>
 
-        //this function will be called after the JavaScriptApplet code has been loaded.
+    <link rel="stylesheet" href="../styles.css">
+
+    <script type="text/javascript" src="jsme/jsme.nocache.js"></script>
+
+    <script>
+        var jsmeApplet;
+
         function jsmeOnLoad() {
-            // glutathione is chiral
-
-
             var glutathione_smiles = "CC(CC(=O)N[C@@H](CS)C(=O)NCC(=O)O)[C@H](N)C(=O)O";
             var glutathione_mol3 = "\n" +
                 "JME 2014-06-28 Sat Jun 05 10:12:20 GMT+200 2021\n" +
@@ -73,135 +80,48 @@
                 "M  V30 END CTAB\n" +
                 "M  END\n";
 
-            var glutathione_JME = "21 20 C 1.21 2.10 C 2.42 1.40 O 1.21 3.50 O 0.00 1.40 N 2.42 0.00 C 3.63 2.10 C 4.85 1.40 C 6.06 2.10 N 7.27 1.40 O 6.06 3.50 C 8.48 2.10 C 9.70 1.40 O 9.70 0.00 N 10.91 2.10 C 12.12 1.40 C 13.34 2.10 C 8.48 3.50 O 14.55 1.40 O 13.34 3.50 S 9.69 4.20 C 3.62 3.50 1 2 1 1 3 2 1 4 1 2 5 -2 2 6 1 6 7 1 7 8 1 8 9 1 8 10 2 9 11 1 11 12 1 12 13 2 12 14 1 14 15 1 15 16 1 11 17 -1 16 18 1 16 19 2 17 20 1 6 21 1";
-
-            var glutathione_mol = "\n" +
-                "JME 2014-06-28 Sat Jun 05 11:57:23 GMT+200 2021\n" +
-                "\n" +
-                " 21 20  0  0  1  0  0  0  0  0999 V2000\n" +
-                "    1.2101    2.1001    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
-                "    2.4201    1.4001    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
-                "    1.2101    3.5002    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n" +
-                "    0.0000    1.4001    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n" +
-                "    2.4201    0.0000    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0\n" +
-                "    3.6302    2.1001    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
-                "    4.8502    1.4001    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
-                "    6.0603    2.1001    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
-                "    7.2704    1.4001    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0\n" +
-                "    6.0603    3.5002    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n" +
-                "    8.4804    2.1001    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
-                "    9.7005    1.4001    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
-                "    9.7005    0.0000    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n" +
-                "   10.9105    2.1001    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0\n" +
-                "   12.1206    1.4001    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
-                "   13.3407    2.1001    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
-                "    8.4804    3.5002    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
-                "   14.5507    1.4001    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n" +
-                "   13.3407    3.5002    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n" +
-                "    9.6905    4.2002    0.0000 S   0  0  0  0  0  0  0  0  0  0  0  0\n" +
-                "    3.6202    3.5002    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
-                "  1  2  1  0  0  0  0\n" +
-                "  1  3  2  0  0  0  0\n" +
-                "  1  4  1  0  0  0  0\n" +
-                "  2  5  1  6  0  0  0\n" +
-                "  2  6  1  0  0  0  0\n" +
-                "  6  7  1  0  0  0  0\n" +
-                "  7  8  1  0  0  0  0\n" +
-                "  8  9  1  0  0  0  0\n" +
-                "  8 10  2  0  0  0  0\n" +
-                "  9 11  1  0  0  0  0\n" +
-                " 11 12  1  0  0  0  0\n" +
-                " 12 13  2  0  0  0  0\n" +
-                " 12 14  1  0  0  0  0\n" +
-                " 14 15  1  0  0  0  0\n" +
-                " 15 16  1  0  0  0  0\n" +
-                " 11 17  1  1  0  0  0\n" +
-                " 16 18  1  0  0  0  0\n" +
-                " 16 19  2  0  0  0  0\n" +
-                " 17 20  1  0  0  0  0\n" +
-                "  6 21  1  0  0  0  0\n" +
-                "M  END\n";
-
-
-            //Instantiate a new JSME:
-            //arguments: HTML id, width, height (must be string not number!)
-
             jsmeApplet = new JSApplet.JSME("appletContainer", "600px", "440px", {
-                //optional parameters
-                "options": "query,hydrogens,fullScreenIcon",
-                //"smiles" : glutathione_smiles
-                //"jme" : glutathione_JME
-                //"mol" : glutathione_mol
-                "chem" : glutathione_mol3 // use generic input file format with automatic chemical format detection
-
+                "options": "newlook,query,hydrogens,fullScreenIcon,autoez",
+                "guicolor": "#ffffff",
+                "guiAtomColor": "#1a2540",
+                "chem": glutathione_mol3
             });
-            jsmeApplet.showInfo("Glutathione is an antioxidant produced in cells"); // customize the info bar
-            // clean the info bar after a change of the displayed structure, disable the callback event
-            // "readMolFile" is the name of the action of the event called during initialization
-            jsmeApplet.setCallBack("AfterStructureModified", (event) => { if(event.action != "readMolFile") {event.src.showInfo("");  event.src.setCallBack("AfterStructureModified",null)}});
+            jsmeApplet.setAntialias(true);
+            jsmeApplet.setMolecularAreaAntiAlias(true);
+            jsmeApplet.setMenuScale(1.25);
+            jsmeApplet.setMolecularAreaLineWidth(2.2);
+            jsmeApplet.setAtomMolecularAreaFontSize(14);
+            jsmeApplet.showInfo("Glutathione is an antioxidant produced in cells");
+            jsmeApplet.setCallBack("AfterStructureModified", function (event) {
+                if (event.action != "readMolFile") {
+                    event.src.showInfo("");
+                    event.src.setCallBack("AfterStructureModified", null);
+                }
+            });
 
             console.log(jsmeApplet.getSupportedFileFormats());
             var copyFormatSelector = document.getElementById("copy_format");
             for (var x of jsmeApplet.getSupportedFileFormats()) {
                 copyFormatSelector.options[copyFormatSelector.options.length] = new Option(x, x);
             }
-            copyFormatSelector.onchange = function(event) {
+            copyFormatSelector.onchange = function (event) {
                 var options = event.target.options;
-                var format =options.item(options.selectedIndex).text;
-
-                // used for both clipboard and drag out
+                var format = options.item(options.selectedIndex).text;
                 jsmeApplet.setCopyToClipboardFormat(format);
+            };
 
-                /* Known issue: some format require loading of additional JavaScript code. The first time such a format is requested, the copy and
-                drag will not work correctly because of loading of JavaScript code.
-                */
-
-            }
-
-
-
-
-            //Alternative method: the size is not specified: the applet will use 100% of the space of its parent container "appletContainer".
-            //Be sure that the parent container size > 0, otherwise the applet will not be visible
-
-            /*    	jsmeApplet = new JSApplet.JSME("appletContainer",  {
-                         //optional parameters
-                        "options" : "query,hydrogens",
-                        "jme" : startingStructure
-                    });
-             */
-
-
-            //Opera patch: if some applet elements are not displayed, force repaint
-            //jsmeApplet.deferredRepaint(); //the applet will be repainted after the browser event loop returns
-            //it is recommended to use it if the JSME is created outside this jsmeOnLoad() function
-
-
-            //jsmeApplet has the same API as the original Java applet
-            //One can mimic the JME Java applet access to simplify the adaptation of HTML and JavaScript code:
             document.JME = jsmeApplet;
-
-
-            //suggestion
-            //all buttons that access the jsme variable were disabled in the html
-            //Now enable all buttons that can access the jsme variable since the applet is ready
-            //example:
-            //document.getElementById("button").disabled=false;
-
-
             document.getElementById("inchiKeyUrlTextArea").value = jsmeApplet.getWebSearchInchiKeyBaseUrl();
-
         }
-
 
         function readMolecule() {
             var jme = "16 17 C 7.37 -8.99 C 7.37 -7.59 C 6.16 -6.89 C 4.95 -7.59 C 4.95 -8.99 C 6.16 -9.69 N 8.58 -6.89 C 8.58 -5.49 C 7.37 -4.79 O 6.16 -5.49 C 9.80 -7.59 O 9.80 -8.99 C 11.01 -6.89 Cl 12.22 -7.59 Cl 11.01 -5.49 C 9.80 -4.79 1 2 1 2 3 2 3 4 1 4 5 2 5 6 1 6 1 2 7 8 1 8 9 1 9 10 1 3 10 1 2 7 1 7 11 1 11 12 2 11 13 1 13 14 1 13 15 1 8 16 1";
-            jsmeApplet.readMolecule(jme); // or document.JME.readMolecule(jme);
+            jsmeApplet.readMolecule(jme);
         }
 
         function readMultipart() {
             var jme = "9 9 C 6.68 -7.15 C 5.47 -6.45 C 4.26 -7.15 C 4.26 -8.55 C 5.47 -9.25 C 6.68 -8.55 C 5.47 -5.05 O- 6.68 -4.35 O 4.26 -4.35 1 2 1 2 3 2 3 4 1 4 5 2 5 6 1 6 1 2 2 7 1 7 8 1 7 9 2|1 0 Na+ 12.21 -6.61";
-            jsmeApplet.readMolecule(jme) // or document.JME.readMolecule(jme
+            jsmeApplet.readMolecule(jme);
         }
 
         function readReaction() {
@@ -209,21 +129,16 @@
             jsmeApplet.readMolecule(jme);
         }
 
-
         function getMolfile(isV3000) {
-            var data = document.JME.molFile(isV3000);
-            document.getElementById("jme_output").value = data;
-
+            document.getElementById("jme_output").value = document.JME.molFile(isV3000);
         }
 
         function getSmiles() {
-            var data = document.JME.smiles();
-            document.getElementById("jme_output").value = data;
+            document.getElementById("jme_output").value = document.JME.smiles();
         }
 
         function getJMEstring() {
-            var data = document.JME.jmeFile();
-            document.getElementById("jme_output").value = data;
+            document.getElementById("jme_output").value = document.JME.jmeFile();
         }
 
         function getMultiSDFstack() {
@@ -236,336 +151,306 @@
         }
 
         function readMoleculeFromTextArea() {
-            var jme = document.getElementById("jme_output").value;
-            jsmeApplet.readMolecule(jme);
+            jsmeApplet.readMolecule(document.getElementById("jme_output").value);
         }
 
         function readMOLFromTextArea() {
-            var mol = document.getElementById("jme_output").value;
-            jsmeApplet.readMolFile(mol);
+            jsmeApplet.readMolFile(document.getElementById("jme_output").value);
         }
 
         function readAnyFromTextArea() {
-            var mol = document.getElementById("jme_output").value;
-            jsmeApplet.readGenericMolecularInput(mol);
+            jsmeApplet.readGenericMolecularInput(document.getElementById("jme_output").value);
         }
-
     </script>
 </head>
 
-
 <body>
 
-
-<!-- RECOMMENDED if your web app will not function without JavaScript enabled -->
 <noscript>
-    <div style="width: 22em; position: absolute; left: 50%; margin-left: -11em; color: red; background-color: white; border: 1px solid red; padding: 4px; font-family: sans-serif">
-        Your web browser must have JavaScript enabled
-        in order for this application to display correctly.
+    <div style="width: 22em; position: absolute; left: 50%; margin-left: -11em; color: #b8392c; background-color: white; border: 1px solid #b8392c; padding: 8px; font-family: sans-serif; z-index: 1000;">
+        Your web browser must have JavaScript enabled in order for this application to display correctly.
     </div>
 </noscript>
-<h1>JSME test page</h1>
 
-<table align="center">
-    <tr>
-        <td id="appletContainer"></td>
-    </tr>
-    </tr>
-</table>
+<a class="skip-link" href="#main">Skip to content</a>
 
-
-<table align="center">
-    <tr>
-        <td>
-            <button type="button" onclick="jsmeApplet.options('oldLook');">Old look</button>
-        </td>
-        <td>
-            <button type="button" onclick="jsmeApplet.options('newLook');">New look</button>
-        </td>
-
-    </tr>
-    <tr>
-        <td>
-            <button type="button" onclick="jsmeApplet.setAntialias(true);">Turn on antialias</button>
-        </td>
-        <td>
-            <button type="button" onclick="jsmeApplet.setAntialias(false);">Turn off antialias</button>
-        </td>
-    </tr>
-
-    <tr>
-        <td>
-            <button type="button" onclick="jsmeApplet.setMolecularAreaAntiAlias(true);">Turn on antialias for the
-                molecular drawing area
+<header class="nav">
+    <div class="container nav-inner">
+        <a class="brand" href="../index.html">
+            <span class="brand-mark">J</span>
+            <span>JSME</span>
+        </a>
+        <nav class="nav-links" aria-label="Primary">
+            <a href="../index.html#features">Features</a>
+            <a href="index.html">Docs</a>
+            <a href="../help.html">Help</a>
+            <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Toggle color theme">
+                <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
             </button>
-        </td>
-        <td>
-            <button type="button" onclick="jsmeApplet.setMolecularAreaAntiAlias(false);">Turn off antialias for the
-                molecular drawing area
-            </button>
-        </td>
-    </tr>
-    <tr>
-        <td>Drawing area line width: <input type="text" name="linewidth" id="linewidth" value="2.0" maxlength="10"/>
-        </td>
-        <td>
-            <button type="button"
-                    onclick='jsmeApplet.setMolecularAreaLineWidth(parseFloat(document.getElementById("linewidth").value));'>
-                set line width
-            </button>
-        </td>
-    </tr>
+            <a class="nav-cta" href="https://github.com/jsme-editor/jsme-editor.github.io" target="_blank" rel="noopener">GitHub</a>
+        </nav>
+    </div>
+</header>
 
+<main id="main">
 
-    <tr>
-        <td>Drawing area font size: <input type="text" name="fontSize" id="fontsize" value="12" maxlength="10"/>
-        </td>
-        <td>
-            <button type="button"
-                    onclick='jsmeApplet.setAtomMolecularAreaFontSize(parseFloat(document.getElementById("fontsize").value));'>
-                set font size
-            </button>
-        </td>
-    </tr>
+<section class="page-header">
+    <div class="container">
+        <span class="eyebrow">Test page · API playground</span>
+        <h1>JSME interactive playground</h1>
+        <p>Experiment with the JSME JavaScript API: tweak rendering, set options, load preset structures, and round-trip molecules through SMILES, Molfile, JME, and SDF.</p>
+    </div>
+</section>
 
-    <tr>
-        <td>Drawing area scale: <input type="text" name="mareascale" id="mareascale" value="1.5" maxlength="10"/>
-        </td>
-        <td>
-            <button type="button"
-                    onclick='jsmeApplet.setMolecularAreaScale(parseFloat(document.getElementById("mareascale").value));'>
-                set scale
-            </button>
-            <button type="button"
-                    onclick='document.getElementById("mareascale").value=jsmeApplet.getMolecularAreaScale();'>get scale
-            </button>
-        </td>
-    </tr>
-    <tr>
-        <td>Non drawing area scale: <input type="text" name="nmareascale" id="nmareascale" value="1.5" maxlength="10"/>
-        </td>
-        <td>
-            <button type="button"
-                    onclick='jsmeApplet.setMenuScale(parseFloat(document.getElementById("nmareascale").value));'>set
-                scale
-            </button>
-            <button type="button" onclick='document.getElementById("nmareascale").value=jsmeApplet.getMenuScale();'>get
-                scale
-            </button>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            Set another background color for the GUI frame and the dialog boxes
-        </td>
-        <td>
-            <button type="button" onclick='jsmeApplet.setUserInterfaceBackgroundColor("#FFFBBCC");'>set predefined
-                color
-            </button>
-        </td>
-    </tr>
+<section class="playground">
+    <div class="container">
 
-</table>
+        <div class="editor-stage">
+            <div class="editor-card">
+                <div class="editor-card-header">
+                    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+                    <span class="editor-card-title">JSME — preloaded with glutathione</span>
+                </div>
+                <div id="appletContainer"></div>
+            </div>
+        </div>
 
-<p></p>
+        <div class="toolbar">
+            <button type="button" class="btn-sm primary" onclick="jsmeApplet.reset()">Clear editor</button>
+            <button type="button" class="btn-sm" onclick="jsmeApplet.repaint()">Repaint applet</button>
+            <button type="button" class="btn-sm" onclick="JSApplet.JSME.clearFontCache()">Clear font cache</button>
+            <button type="button" class="btn-sm" onclick="jsmeApplet.options('oldLook')">Old look</button>
+            <button type="button" class="btn-sm" onclick="jsmeApplet.options('newLook')">New look</button>
+        </div>
 
-<p></p>
+        <div class="panels">
 
+            <div class="panel">
+                <div class="panel-title">Rendering</div>
+                <h3>Antialiasing &amp; sizing</h3>
+                <p class="panel-sub">Toggle smoothing and adjust drawing-area metrics.</p>
 
-<table align="center">
-    <tr>
-        <td>
-            Turning AA on and off does not work with IE 9 & 10 (it is always on).
-        </td>
-    </tr>
-    <p></p>
-    <p></p>
+                <div class="field stack">
+                    <label>Antialiasing (entire applet)</label>
+                    <div class="field-row">
+                        <button type="button" class="btn-sm" onclick="jsmeApplet.setAntialias(true)">Turn on</button>
+                        <button type="button" class="btn-sm" onclick="jsmeApplet.setAntialias(false)">Turn off</button>
+                    </div>
+                </div>
 
-</table>
+                <div class="field stack">
+                    <label>Antialiasing (drawing area only)</label>
+                    <div class="field-row">
+                        <button type="button" class="btn-sm" onclick="jsmeApplet.setMolecularAreaAntiAlias(true)">Turn on</button>
+                        <button type="button" class="btn-sm" onclick="jsmeApplet.setMolecularAreaAntiAlias(false)">Turn off</button>
+                    </div>
+                </div>
 
-<div align="center">
-    <button TYPE="button" onClick="jsmeApplet.reset()">Clear Editor</button>
-    <button type="button" onclick='JSApplet.JSME.clearFontCache()'>Clear the font cache</button>
-    <button type="button" onclick='jsmeApplet.repaint()'>Repaint the applet</button>
-</div>
+                <div class="field">
+                    <div>
+                        <label for="linewidth">Drawing area line width</label>
+                        <input type="text" id="linewidth" value="2.0" maxlength="10">
+                    </div>
+                    <button type="button" class="btn-sm" onclick="jsmeApplet.setMolecularAreaLineWidth(parseFloat(document.getElementById('linewidth').value))">Apply</button>
+                </div>
 
+                <div class="field">
+                    <div>
+                        <label for="fontsize">Drawing area font size</label>
+                        <input type="text" id="fontsize" value="12" maxlength="10">
+                    </div>
+                    <button type="button" class="btn-sm" onclick="jsmeApplet.setAtomMolecularAreaFontSize(parseFloat(document.getElementById('fontsize').value))">Apply</button>
+                </div>
 
-<hr>
+                <div class="field">
+                    <div>
+                        <label for="mareascale">Drawing area scale</label>
+                        <input type="text" id="mareascale" value="1.5" maxlength="10">
+                    </div>
+                    <div class="field-row">
+                        <button type="button" class="btn-sm" onclick="jsmeApplet.setMolecularAreaScale(parseFloat(document.getElementById('mareascale').value))">Set</button>
+                        <button type="button" class="btn-sm" onclick="document.getElementById('mareascale').value = jsmeApplet.getMolecularAreaScale()">Get</button>
+                    </div>
+                </div>
 
+                <div class="field">
+                    <div>
+                        <label for="nmareascale">Non-drawing area scale</label>
+                        <input type="text" id="nmareascale" value="1.5" maxlength="10">
+                    </div>
+                    <div class="field-row">
+                        <button type="button" class="btn-sm" onclick="jsmeApplet.setMenuScale(parseFloat(document.getElementById('nmareascale').value))">Set</button>
+                        <button type="button" class="btn-sm" onclick="document.getElementById('nmareascale').value = jsmeApplet.getMenuScale()">Get</button>
+                    </div>
+                </div>
 
-<table align="center">
-    <tr>
-        <td colspan="2" style="font-weight:bold;">Set options:</td>
-    </tr>
-    <tr>
-        <td>
-            <textarea id="optionsTextArea" , rows="1" cols="50">polarnitro,reaction,noquery,oldlook,noatommovebutton</textarea>
+                <div class="field stack">
+                    <label>GUI / dialog background color</label>
+                    <button type="button" class="btn-sm" onclick="jsmeApplet.setUserInterfaceBackgroundColor('#FFFBBCC')">Set predefined color</button>
+                </div>
 
-        </td>
-        <td>
-            <button type="button" id="optionsButton"
-                    onclick='var options = document.getElementById("optionsTextArea").value; jsmeApplet.options(options);'>
-                Set options
-            </button>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            Customize the help URL: <textarea id="urlTextArea" , rows="1" cols="50">https://jsme-editor.github.io/help.html</textarea>
-        </td>
+                <div class="note">Antialias toggling has no effect in legacy IE 9/10 — it is always on there.</div>
+            </div>
 
-        <td>
-            <button type="button" id="urlButton"
-                    onclick='var url = document.getElementById("urlTextArea").value; jsmeApplet.setHelpURL(url);'>Set
-                help URL
-            </button>
-        </td>
-    </tr>
+            <div class="panel">
+                <div class="panel-title">Options &amp; URLs</div>
+                <h3>Applet configuration</h3>
+                <p class="panel-sub">Pass option strings, customize external URLs, and override search behavior.</p>
 
+                <div class="field stack">
+                    <label for="optionsTextArea">Options string</label>
+                    <textarea id="optionsTextArea" rows="2">polarnitro,reaction,noquery,oldlook,noatommovebutton</textarea>
+                    <div class="field-row" style="margin-top: 8px;">
+                        <button type="button" class="btn-sm" onclick="jsmeApplet.options(document.getElementById('optionsTextArea').value)">Set options</button>
+                    </div>
+                </div>
 
-    <tr>
-        <td>
-            Display a message in the bottom bar: <textarea id="msgTextArea" , rows="1" cols="50">MW: XXXX.XXX</textarea>
-        </td>
-        <td>
-            <button type="button" id="msgButton"
-                    onclick='var msg = document.getElementById("msgTextArea").value; jsmeApplet.showInfo(msg);'>Show a
-                message in the bottom bar
-            </button>
-        </td>
-    </tr>
+                <div class="field stack">
+                    <label for="urlTextArea">Help URL</label>
+                    <textarea id="urlTextArea" rows="1">https://jsme-editor.github.io/help.html</textarea>
+                    <div class="field-row" style="margin-top: 8px;">
+                        <button type="button" class="btn-sm" onclick="jsmeApplet.setHelpURL(document.getElementById('urlTextArea').value)">Set help URL</button>
+                    </div>
+                </div>
 
+                <div class="field stack">
+                    <label for="msgTextArea">Bottom-bar message</label>
+                    <textarea id="msgTextArea" rows="1">MW: XXXX.XXX</textarea>
+                    <div class="field-row" style="margin-top: 8px;">
+                        <button type="button" class="btn-sm" onclick="jsmeApplet.showInfo(document.getElementById('msgTextArea').value)">Show message</button>
+                    </div>
+                </div>
 
-    <tr>
-        <td>
-            Customize the InChIKey search base URL: <textarea id="inchiKeyUrlTextArea" , rows="1" cols="50"></textarea>
-        </td>
-        <td>
-            <button type="button"
-                    onclick='var url = document.getElementById("inchiKeyUrlTextArea").value; jsmeApplet.setWebSearchInchiKeyBaseUrl(url);'>
-                Set InChIKey search base URL
-            </button>
-        <td>
-        </td>
-    </tr>
+                <div class="field stack">
+                    <label for="inchiKeyUrlTextArea">InChIKey search base URL</label>
+                    <textarea id="inchiKeyUrlTextArea" rows="1"></textarea>
+                    <div class="field-row" style="margin-top: 8px;">
+                        <button type="button" class="btn-sm" onclick="jsmeApplet.setWebSearchInchiKeyBaseUrl(document.getElementById('inchiKeyUrlTextArea').value)">Set base URL</button>
+                    </div>
+                </div>
 
-    <tr>
-        <td>
-            Customize the InChIKey search using a custom function. In this example, the search function is replaced by
-            opening a simple alert.
-        </td>
-        <td>
-            <button type="button"
-                    onclick='jsmeApplet.setCallBack("InchiKeySearch", function(jsmeEvent) {alert(jsmeEvent.argument.key + "\n" + jsmeEvent.argument.inchi + "\n");});'>
-                Set InChIKey search callback function
-            </button>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            Reset InChIKey search to its default function.
-        </td>
-        <td>
-            <button type="button" onclick='jsmeApplet.setCallBack("InchiKeySearch", null);'>Set InChi key search
-                callback function to null
-            </button>
-        </td>
-    </tr>
+                <div class="field stack">
+                    <label>InChIKey search callback</label>
+                    <div class="field-row">
+                        <button type="button" class="btn-sm" onclick='jsmeApplet.setCallBack("InchiKeySearch", function(e) { alert(e.argument.key + "\n" + e.argument.inchi + "\n"); })'>Replace with alert</button>
+                        <button type="button" class="btn-sm" onclick='jsmeApplet.setCallBack("InchiKeySearch", null)'>Reset to default</button>
+                    </div>
+                </div>
+            </div>
 
-</table>
+            <div class="panel full">
+                <div class="panel-title">Structures</div>
+                <h3>Load predefined examples</h3>
+                <p class="panel-sub">Inject one of the bundled sample structures into the editor.</p>
+                <div class="io-grid">
+                    <button type="button" class="btn-sm" onclick="readMolecule()">Read JME string</button>
+                    <button type="button" class="btn-sm" onclick="readMultipart()">Read multipart structure</button>
+                    <button type="button" class="btn-sm" onclick="readReaction()">Read reaction</button>
+                </div>
+            </div>
 
-<p></p>
-<p></p>
+            <div class="panel full">
+                <div class="panel-title">Import / export</div>
+                <h3>Round-trip molecules through the API</h3>
+                <p class="panel-sub">Export the current structure to a textual format, or paste a format below and load it back into the editor.</p>
 
+                <div class="io-grid">
+                    <button type="button" class="btn-sm primary" onclick="getMolfile(false)">Get Molfile</button>
+                    <button type="button" class="btn-sm primary" onclick="getMolfile(true)">Get Molfile V3000</button>
+                    <button type="button" class="btn-sm primary" onclick="getSmiles()">Get SMILES</button>
+                    <button type="button" class="btn-sm primary" onclick="getJMEstring()">Get JME string</button>
+                    <button type="button" class="btn-sm primary" onclick="getMultiSDFstack()">Get SDF stack</button>
+                </div>
 
-<table align="center">
-    <tr>
-        <td colspan="3" style="font-weight:bold;">Import predefined chemical structure to applet:</td>
-    </tr>
-    <tr>
-        <td>
-            <button type="button" onclick='readMolecule();'>Read JME String</button>
+                <div class="output-area">
+                    <label for="jme_output" style="font-size:13px;color:var(--fg-muted);display:block;margin-bottom:6px;">Output / paste area</label>
+                    <textarea id="jme_output" rows="14"></textarea>
+                </div>
 
-        </td>
-        <td id="readMultipartButton">
-            <button type="button" onclick='readMultipart();'>Read Multipart Structure</button>
+                <div class="io-grid" style="margin-top: 12px;">
+                    <button type="button" class="btn-sm" onclick="readMOLFromTextArea()">Read MOL from above</button>
+                    <button type="button" class="btn-sm" onclick="readMoleculeFromTextArea()">Read JME from above</button>
+                    <button type="button" class="btn-sm" onclick="readAnyFromTextArea()">Read any supported format</button>
+                </div>
+            </div>
 
-        </td>
-        <td id="readReactionButton">
-            <button type="button" onclick='readReaction();'>Read reaction</button>
+            <div class="panel full">
+                <div class="panel-title">Clipboard</div>
+                <h3>Default copy format</h3>
+                <p class="panel-sub">Used by Ctrl+C and drag &amp; drop out of the editor.</p>
 
-        </td>
-    </tr>
-</table>
+                <div class="field">
+                    <select name="copy_format" id="copy_format">
+                        <option value="" selected="selected">Select format…</option>
+                    </select>
+                </div>
 
-<p></p>
-<p></p>
+                <div class="note">Some formats (e.g. InChI) require loading additional JavaScript. The first time such a format is requested, the copy or drag may not work correctly until the loader finishes.</div>
+            </div>
 
-<table align="center">
-    <tr>
-        <td colspan="3" style="font-weight:bold;">Export chemical structure from applet:</td>
-    </tr>
-    <tr>
-        <td>
-            <button type="button" onclick='getMolfile(false);'>Get molfile</button>
-        </td>
-        <td>
-            <button type="button" onclick='getMolfile(true);'>Get molfile V3000</button>
-        </td>
-        <td>
-            <button type="button" onclick='getSmiles();'>Get smiles</button>
-        </td>
-        <td>
-            <button type="button" onclick='getJMEstring();'>Get JME string</button>
-        </td>
-        <td>
-            <button type="button" onclick='getMultiSDFstack();'>Get SDF stack</button>
-        </td>
-    </tr>
-    <tr>
-        <td colspan="5">
-            <TEXTAREA id="jme_output" ROWS=20 COLS=80></TEXTAREA>
-        </td>
-    </tr>
+        </div>
+    </div>
+</section>
+</main>
 
-</table>
+<footer>
+    <div class="container">
+        <div class="footer-grid">
+            <div>
+                <h4>JSME</h4>
+                <p style="margin: 0 0 8px;">A free molecule editor in JavaScript by Peter Ertl and Bruno Bienfait.</p>
+                <p style="margin: 0; font-size: 13px; color: rgba(255,255,255,0.4);">Released under the BSD license.</p>
+            </div>
+            <div>
+                <h4>Product</h4>
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="JSME_test.html">Playground</a></li>
+                    <li><a href="index.html">Documentation</a></li>
+                    <li><a href="../help.html">Help</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Downloads</h4>
+                <ul>
+                    <li><a href="../downloads/JSME_2024-04-29.zip">Latest zip</a></li>
+                    <li><a href="https://github.com/jsme-editor/jsme-editor.github.io/tree/main/downloads/">All releases</a></li>
+                    <li><a href="https://www.npmjs.com/package/jsme-editor">npm package</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Community</h4>
+                <ul>
+                    <li><a href="https://github.com/jsme-editor/jsme-editor.github.io">GitHub repo</a></li>
+                    <li><a href="https://github.com/jsme-editor/jsme-editor.github.io/discussions">Discussions</a></li>
+                    <li><a href="https://github.com/jsme-editor/jsme-editor.github.io/issues">Issues</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div>© Peter Ertl &amp; Bruno Bienfait · BSD license</div>
+            <div><a href="license.txt">License</a> · <a href="release_notes.txt">Release notes</a></div>
+        </div>
+    </div>
+</footer>
 
-<table align="center">
-    <tr>
-        <td colspan="3" style="font-weight:bold;">Import chemical structure from text area above to applet:</td>
-    </tr>
-    <tr>
-        <td>
-            <button type="button" onclick='readMOLFromTextArea();'>Read MOL</button>
-        </td>
-        <td>
-            <button type="button" onclick='readMoleculeFromTextArea();'>Read JME String</button>
-        </td>
-        <td>
-            <button type="button" onclick='readAnyFromTextArea();'>Read any supported format</button>
-        </td>
-
-</table>
-
-
-<p></p>
-
-<hr>
-<div align="center">
-Select default copy format for Ctrl C and Drag&Drop:
-    <br>
-    <select name="copy_format" id="copy_format">
-    <option value="" selected="selected">Select format</option>
-</select>
-    <br><br>
-
-    Known issue: some formats (e.g InChi) require loading of additional JavaScript code. The first time such a format is requested, the copy or
-drag will not work correctly because of loading of JavaScript code.
-<br><br>
-</div>
-
-<hr>
-
+<script>
+    (function () {
+        var btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        function current() {
+            var t = document.documentElement.getAttribute('data-theme');
+            if (t) return t;
+            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        btn.addEventListener('click', function () {
+            var next = current() === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', next);
+            try { localStorage.setItem('jsme-theme', next); } catch (e) {}
+        });
+    })();
+</script>
 
 </body>
 </html>
